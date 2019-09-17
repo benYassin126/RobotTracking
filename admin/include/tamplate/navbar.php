@@ -24,7 +24,7 @@
 
         <li><a href="users.php">Users</a></li>
 
-        <li><a href="books.php">Robots</a></li>
+        <li><a href="robots.php">Robots</a></li>
 
       </ul>
 

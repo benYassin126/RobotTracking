@@ -48,7 +48,7 @@ include 'init.php'; // To include All Importants File Like [Connect To DB and He
 
 					<div class="col-sm-3">
 
-						<a href="Books.php">
+						<a href="robots.php">
 
 							<div class="one-stat st-item">
 
@@ -88,7 +88,7 @@ include 'init.php'; // To include All Importants File Like [Connect To DB and He
 
 		 $NumberOfLimitForRobots = 10;
 
-		 $LastBooks = LastRecord ("*", "robots" , "RobotID", $NumberOfLimitForRobots); // use LastRecord funciton to get last records in a table
+		 $Lastrobots = LastRecord ("*", "robots" , "RobotID", $NumberOfLimitForRobots); // use LastRecord funciton to get last records in a table
 
 
 		 ?>
@@ -190,11 +190,11 @@ include 'init.php'; // To include All Importants File Like [Connect To DB and He
 
 									<?php
 
-				foreach ($LastBooks as $last) {
+				foreach ($Lastrobots as $last) {
 
 					//get data from db and style it
 
-								echo "<li>" .  $last["RobotName"]  . "<a href='books.php?do=delete&BookID=" .$last["RobotID"] . "'>
+								echo "<li>" .  $last["RobotName"]  . "<a href='robots.php?do=delete&robotID=" .$last["RobotID"] . "'>
 
 									<span class='btn btn-danger pull-right confirm'>
 
@@ -204,7 +204,7 @@ include 'init.php'; // To include All Importants File Like [Connect To DB and He
 
 									</span>  
 
-								</a> " . "<a href='books.php?do=edit&BookID=" .$last["RobotID"] . "'>
+								</a> " . "<a href='robots.php?do=edit&robotID=" .$last["RobotID"] . "'>
 
 									<span class='btn btn-success pull-right'>
 
