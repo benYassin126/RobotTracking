@@ -23,7 +23,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 		echo "<div class='loginErorrs'>";
 			echo "<div class='container alert alert-success'>  <i class='far fa-check-circle'></i> Welcome back you will be redirected now  </div>";
 		echo "</div>";
-		header("refresh:3 , url=dashboard.php");
+		header("refresh:3 , url=UI.php");
 		exit();
 
 
