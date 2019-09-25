@@ -1,10 +1,12 @@
 <?php
 
+
+
 SESSION_START(); // Start The SESSION To Get all Varabels and Set Some Varabels
 
 $nonavbar = ''; // in This Page We Dont Need Navbar
 
-$PageTitle = 'Admin Login'; // Set 'Admin Login' in Page Tiltle Via getTitle() Funciton
+$PageTitle = 'Admin'; // Set 'Admin Login' in Page Tiltle Via getTitle() Funciton
 
 
 include 'init.php'; // To include All Importants File Like [Connect To DB and Header ..etc]
@@ -22,6 +24,11 @@ if (isset($_SESSION['AdminID'])) { // if Admin ALready Login To system Dont Show
 
 if($_SERVER['REQUEST_METHOD'] == "POST") {
 
+
+
+
+	$x =  $_POST['username'];
+	$y = $_POST['pass'];
 
 	$username = $_POST['username']; //Get Username From The Below Form
 
@@ -47,7 +54,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 
     //First thing add adminID AND username To Session in order to Go To Dashboard
 
- 		  $_SESSION['AdminID'] = $row['UserID']; 
+ 		$_SESSION['AdminID'] = $row['UserID']; 
   		$_SESSION['UserName'] = $row['UserName'];
 
     // Then Redirct Adoin To dashboard
@@ -58,7 +65,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 
     // if not admon show this mssage
 
- 			echo "Pass Or Phone Erorr!";
+ 			echo "Sorry ! Your Not Admin";
 
  		}
 

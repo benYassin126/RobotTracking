@@ -1,0 +1,121 @@
+
+
+@media (min-width:100px) and (max-width:350px ) 
+{
+
+
+.navbar-right h1
+{
+
+  font-weight: normal;
+  font-size: 15px;
+  margin-top: 30px;
+
+}
+
+.testtt
+{
+  visibility:hidden;
+}
+
+    
+}
+
+
+
+
+
+/* less small smart phone and tablets*/
+
+@media (min-width:300px) and (max-width:531px ) 
+
+{
+
+
+  .UpContent .selectboxit-container .selectboxit
+{
+ width: 100%; 
+}
+.UpContent .selectboxit-container .selectboxit-options {
+  min-width: 100%;
+  left: 0;
+}
+
+  .informaiton .panel-default {
+
+  background-color: #fff;
+  width: 100%;
+  margin: auto;
+
+}
+
+.CusFile:after 
+{
+  content: "";
+  background-color:transparent;
+  color: #fff;
+  padding-right: 15px;
+  width: 100px;
+  height: 30px;
+  position: absolute;
+  top: 0;
+  left:0;
+  line-height: 30px;
+}
+
+.BackLogin {
+
+	  box-shadow:none;
+	    padding: 6px 25px; 
+}
+
+.BackLogin .input-group:first-child {
+    padding-top: 0px;
+}
+
+
+
+    
+}
+
+/*   smart phone and tablets*/
+@media (max-width:550px) and (max-width:750px)
+{
+
+
+
+
+    
+}
+
+
+/* small screen*/
+
+@media (max-width:768px) and (max-width:991px)
+{
+
+
+
+    
+}
+
+
+/*  medum Screen*/
+
+@media (min-width:992px) and (max-width:1199px)
+{
+
+}
+/*  large Screen*/
+
+@media (min-width:1140px) and (max-width:1400px)
+{
+
+.DownContent .oneBook
+{
+  width: 70%;
+  }
+    
+}
+
+

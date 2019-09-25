@@ -1,0 +1,2560 @@
+
+
+
+
+/*Strat Mine Style*/
+
+
+
+html
+
+
+
+{
+
+  direction: ltr;
+
+  height:100% !important;
+
+
+
+  font-size: 10px;
+
+
+
+}
+
+
+
+body {
+
+
+
+
+
+
+
+  position: relative;
+
+
+
+  margin: 0;
+
+
+
+  padding-bottom: 6rem;
+
+
+
+  min-height: 100%;
+
+
+
+  box-sizing: border-box;
+
+
+
+  background-color: #f7fafc !important;
+
+
+
+font-family: 'Cairo', sans-serif;
+
+
+
+  font-size: 16px;
+
+
+
+
+
+
+
+}
+
+a {
+    color: #94a0a1;
+
+    }
+
+
+.btn-success,.btn-primary
+{
+  background: linear-gradient(45deg, #607D8B 0%, #00BCD4 100%);
+}
+
+
+.alert-success
+
+
+
+{
+
+
+
+  width: 100%;
+
+
+
+  margin: 0 auto;
+
+
+
+}
+
+
+
+
+
+input[type=file] {
+
+
+
+  display: inline;
+
+}
+
+
+
+
+
+.LineTitle {
+
+
+
+   margin-top: 20px;
+
+
+
+    margin-bottom: 20px;
+
+
+
+    border: 0;
+
+
+
+    border-top: 1px solid #ddd;
+
+
+
+    width: 99px;
+
+
+
+    opacity: .2;
+
+
+
+}
+
+
+
+
+
+
+
+.alstrx {
+
+
+
+  color: red;
+
+
+
+  font-weight: bold;
+
+
+
+}
+
+
+
+.btn
+
+
+
+{
+
+
+
+  color: #efefef;
+
+
+
+  border:solid 1px rgba(239,239,239,0.5);
+
+
+
+}
+
+
+
+.selectboxit-text
+
+
+
+{
+
+
+
+  float: right;
+
+
+
+  padding-right: 20px;
+
+
+
+  font-size: 1.2em;
+
+
+
+font-family: 'Tajawal', sans-serif;
+
+margin-top: 2px;
+
+
+
+}
+
+
+
+.selectboxit-option-icon-container {
+
+
+
+    float: right;
+
+
+
+}
+
+
+
+.selectboxit-container {
+
+
+
+  font-family: 'Tajawal', sans-serif;
+
+
+
+}
+
+
+
+
+
+
+
+.selectboxit-option, .selectboxit-optgroup-header
+
+
+
+{
+
+
+
+  text-align: right;
+
+
+
+}
+
+
+
+/*
+
+
+
+font-family: 'Baloo Bhaijaan', cursive;
+
+
+
+font-family: 'Tajawal', sans-serif;
+
+
+
+*/
+
+
+
+
+
+
+
+/*End Mine Style*/
+
+
+
+
+
+
+
+
+
+
+
+/*Start NavBar*/
+
+
+
+
+
+
+
+.navbar {
+
+
+border-radius: 0px;
+
+
+	color: #fff;
+
+
+
+ background: linear-gradient(45deg, #00BCD4 0%, #9E9E9E 100%);
+
+
+
+	padding: 1px 0;
+
+
+
+  margin-bottom: 50px;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+ .navbar-nav i 
+
+
+
+ {
+
+
+
+	color: #fff;
+
+
+
+	font-size: 23px;
+
+
+
+	transition: all .3s;
+
+
+
+ }
+
+
+
+   .navbar-nav .btn
+
+
+
+  {
+
+
+
+     padding: 7px;
+
+
+
+    border: solid 1px rgba(239,239,239,0.5);
+
+
+
+    border-radius: 0;
+
+
+
+    margin-top: 10px;
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+  .navbar-nav .btn i
+
+
+
+ {
+
+
+
+ 	font-size: 15px;
+
+
+
+    margin-left: 5px;
+
+
+
+    transition: none;
+
+
+
+
+
+
+
+ }
+
+
+
+
+
+
+
+.navbar-nav {
+
+
+
+    float: left;
+
+
+
+    margin: 0;
+
+
+
+}
+
+
+
+.navbar-right {
+
+
+
+    float: left!important;
+
+
+
+    margin-right: -15px;
+
+
+
+     margin-top: -13px;
+
+
+
+ }
+
+
+
+
+
+
+
+
+
+
+
+  .navbar-right h1 {
+
+
+
+font-family: 'Changa', sans-serif;
+
+
+
+}
+
+
+
+
+
+
+
+.navbar-nav>li>a {
+
+
+
+    padding-top: 15px;
+
+
+
+    padding-bottom: 15px;
+
+
+
+}
+
+
+
+.nav>li 
+
+
+
+{
+
+
+
+	display: inline-block;
+
+
+
+	float: left;
+
+
+
+}
+
+
+
+.nav>li>a:focus, .nav>li>a:hover 
+
+
+
+{
+
+
+
+background-color: transparent;
+
+
+
+color: #fff;
+
+
+
+
+
+
+
+}
+
+
+
+.navbar-right a
+
+
+
+{
+
+
+
+	color: #fff;
+
+
+
+	margin: 0;
+
+
+
+	padding: 0 !important
+
+
+
+}
+
+
+
+/* The side navigation menu */
+
+
+
+.sidenav {
+
+
+
+  height: 100%; /* 100% Full-height */
+
+
+
+  width: 0; /* 0 width - change this with JavaScript */
+
+
+
+  position: fixed; /* Stay in place */
+
+
+
+  z-index: 3; /* Stay on top */
+
+
+
+  top: 0;
+
+
+
+  left: 0;
+
+
+
+  background: linear-gradient(45deg, #00BCD4 0%, #9E9E9E 100%); /* Black*/
+
+
+
+  overflow-x: hidden; /* Disable horizontal scroll */
+
+
+
+  padding-top: 60px; /* Place content 60px from the top */
+
+
+
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+
+
+
+}
+
+
+
+
+
+
+
+/* The navigation menu links */
+
+
+
+.sidenav .closebtn  {
+
+
+
+  font-weight: bold;
+
+
+
+  padding: 8px 8px 8px 32px;
+
+
+
+  text-decoration: none;
+
+
+
+  font-size: 25px;
+
+
+
+  color: #fff;
+
+
+
+  display: block;
+
+
+
+  transition: 0.3s;
+
+
+
+}
+
+
+
+
+
+
+
+/* When you mouse over the navigation links, change their color */
+
+
+
+.sidenav a:hover {
+
+
+
+  color: #f1f1f1;
+
+
+
+}
+
+
+
+
+
+
+
+/* Position and style the close button (top right corner) */
+
+
+
+.sidenav .closebtn {
+
+
+
+  position: absolute;
+
+
+
+  top: 0;
+
+
+
+  right: 25px;
+
+
+
+  font-size: 36px;
+
+
+
+  margin-left: 50px;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+
+
+
+@media screen and (max-height: 450px) {
+
+
+
+  .sidenav {padding-top: 15px;}
+
+
+
+  .sidenav a {font-size: 18px;}
+
+
+
+}
+
+
+
+.sidenav .ManageBooks h1 {
+
+
+
+color: #fff;
+
+
+
+    font-size: 55px;
+
+
+
+    margin-bottom: 74px;
+
+
+
+}
+
+
+
+.sidenav .ManageBooks .LineTitle {
+
+
+
+
+
+
+
+  width: 100%;
+
+
+
+  margin-bottom: 55px;
+
+
+
+}
+
+
+
+.sidenav .ManageBooks .btn
+
+
+
+{
+
+
+
+      display: block;
+
+
+
+    width: 170px;
+
+
+
+    margin: 30px auto;
+
+
+
+    transition: all .3s;
+
+
+
+}
+
+
+
+.sidenav .ManageBooks .btn:hover
+
+
+
+{
+
+
+
+  background-color: #2980b94f;
+
+
+
+}
+
+
+
+/*End NavBar*/
+
+
+
+
+
+
+
+/*Start Login */
+
+
+
+
+
+
+
+.BackLogin
+
+
+
+{
+
+
+
+   max-width: 500px;
+
+
+
+    margin: 0 auto;
+
+
+
+    padding: 0 7px;
+
+
+
+box-shadow: -1px 0px 20px 0px #aaa;
+
+
+
+    padding-bottom: 10px
+
+
+
+}
+
+
+
+.BackLogin .input-group {
+
+
+
+    padding: 10px;
+
+
+
+    margin: 12px;
+
+
+
+  }
+
+
+
+.BackLogin .input-group .form-control {
+
+
+
+    background: #fff;
+
+
+
+  }
+
+
+
+.BackLogin .input-group:first-child
+
+
+
+{
+
+
+
+  padding-top: 40px;
+
+
+
+}
+
+
+
+
+
+
+
+.BackLogin .btnLogo
+
+
+
+{
+
+
+
+  margin: 0 auto;
+
+
+
+}
+
+
+
+.BackLogin p 
+
+
+
+{
+
+
+
+  font-size: 15px;
+
+
+
+    padding-right: 15px;
+
+
+
+    margin-top: 11px;
+
+
+
+}
+
+
+
+.BackLogin .btn-success
+
+
+
+{
+
+
+
+  margin-right: 15px;
+
+
+
+  margin-bottom: 15px;
+
+
+
+}
+
+
+
+.loginErorrs
+
+
+
+{
+
+
+
+  padding: 0 20px;
+
+
+
+
+
+
+
+}
+
+
+
+.loginErorrs .alert
+
+
+
+{
+
+
+
+
+
+  font-size: 17px;
+
+
+
+    font-weight: bold;
+
+
+
+}
+
+
+
+
+
+
+
+/*End Login*/
+
+
+
+
+
+
+
+.g-recaptcha
+
+
+
+{
+
+
+
+  padding:10px;
+
+
+
+  margin: 10px;
+
+
+
+  font-family: 'Tajawal', sans-serif;
+
+
+
+}
+
+
+
+
+
+
+
+/*Start Regster*/
+
+
+
+.show-pass
+
+
+
+{
+
+
+
+    position: absolute;
+
+
+
+    top: 14px;
+
+
+
+    right: 438px;
+
+
+
+    z-index: 2;
+
+
+
+}
+
+
+
+
+
+
+
+/*End Regster*/
+
+
+
+
+
+
+
+/*start index*/
+
+
+
+.UpContent {
+
+
+
+  margin-top: -17px;
+
+
+
+}
+
+
+
+.UpContent .selectboxit-container .selectboxit
+
+
+
+{
+
+
+
+ width: 50%;
+
+
+
+ height: 37px;
+
+
+
+ margin: 0 auto; 
+
+
+
+}
+
+
+
+.UpContent .selectboxit-container .selectboxit-options {
+
+
+
+  min-width: 50%;
+
+
+
+  left: 25%;
+
+
+
+}
+
+
+
+
+
+
+
+.UpContent .SetOfButtns
+
+
+
+{
+
+
+
+    text-align: center;
+
+
+
+    margin-top: 15px;
+
+
+
+}
+
+
+
+
+
+
+
+.UpContent .SetOfButtns ul
+
+
+
+{
+
+
+
+  padding: 0;
+
+
+
+  list-style: none;
+
+
+
+  padding-top: 15px;
+
+
+
+}
+
+
+
+.UpContent .SetOfButtns ul li
+
+
+
+{
+
+
+
+  display: inline;
+
+
+
+  margin-right: 10px;
+
+
+
+}
+
+
+
+.UpContent .SetOfButtns ul li .btn-default
+
+
+
+{
+
+    border: 1px solid #dedede;
+    margin-bottom: 10px;
+    background-color: #ffffff0f;
+    border-radius: 10px;
+    color: #2c5282;
+    transition: .5s;
+
+
+}
+
+
+
+.UpContent .SetOfButtns ul li .btn-default:hover {
+
+
+
+  background: #1fa7bb2e;
+
+
+
+  color: #333;
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+.ActiveTag {
+
+
+
+background: #658d92c4 !important;
+    color: #fff!important;
+
+
+
+}
+
+
+
+
+
+
+
+.DownContent .oneBook
+
+
+
+{
+
+
+
+     margin: 0px auto;
+
+
+
+     width: 100%;
+
+
+
+     padding: 6px 36px;
+
+
+
+    background-color: #ebf4f773; 
+
+
+
+    border-bottom: 1px solid #eee;
+
+
+
+}
+
+
+
+.DownContent .oneBook:first-child 
+
+
+
+{
+
+
+
+  margin-top: 20px;
+
+
+
+}
+
+
+
+.DownContent .oneBook:nth-child(odd)
+
+
+
+{
+
+
+
+  background: #f7fafc ;
+
+
+
+}
+
+
+
+.DownContent .oneBook .LocitonofBook
+
+
+
+{
+
+
+  display: block;
+  margin-top: -13px;
+
+
+
+}
+
+
+
+.LocitonofBook a {
+
+
+
+    color :#9E9E9E !important;
+
+
+
+}
+
+
+
+.DownContent .oneBook i
+
+
+
+{
+
+
+
+  padding-left: 2.5px;
+
+
+
+}
+
+
+
+.DownContent .oneBook h4
+
+
+
+{
+
+
+
+  color: #2c5282;
+
+  font-weight: bold;
+
+
+  margin-bottom: 27px;
+
+
+
+}
+
+
+
+.DownContent .oneBook span
+
+
+
+{
+
+
+
+  font-size: 12px;
+
+
+      color: #aaa;
+
+      
+
+
+
+}
+
+
+
+.DownContent .oneBook .LeftCont 
+
+
+
+{
+
+
+
+  margin-right: -23px;
+
+
+
+}
+
+
+
+.UserSetBook
+
+
+
+{
+
+
+
+padding-right: 5px;
+
+
+}
+
+
+
+.DownContent .oneBook img
+
+
+
+{
+
+
+
+
+
+
+  position: absolute;
+
+
+
+   float: left;
+
+
+
+    width: 90px;
+
+
+
+    height: 95px;
+
+
+
+    margin: 0;
+
+
+
+    margin-top: -84px;
+
+
+
+    margin-left: -34px;
+
+
+
+
+    left: 17px;
+
+
+
+    top: 79px;
+
+
+
+
+
+
+
+}
+
+
+
+.testtt
+
+
+
+{
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+/*end index */
+
+
+
+
+
+
+
+/*add book*/
+
+
+
+
+
+
+
+/*start viewbook */
+
+
+
+.uperConteent img
+
+
+
+{
+
+
+
+    margin: 0 auto;
+
+
+
+    width: 150px;
+
+
+
+    height: 200px;
+
+
+
+}
+
+
+
+.uperConteent h4 {
+
+
+
+    margin-bottom: 20px;
+
+    font-weight: bold;
+
+    color: #2c5282;
+
+
+
+}
+
+
+
+.downerConntent {
+
+
+
+    overflow: hidden;
+
+    width: 100%;
+
+    margin: auto;
+
+}
+
+.downerConntent ul
+
+
+
+{
+
+
+
+list-style: none;
+
+padding: 0;
+
+
+
+}
+
+
+
+
+
+.downerConntent ul li {
+
+  color: #325282;
+
+    background: #f7fafc;
+
+  margin-bottom: 10px;
+
+   width: 100%;
+
+   padding: 5px;
+
+}
+
+
+
+.downerConntent ul li .fas
+
+
+
+{
+
+ 
+
+    color: #82a4a8;
+
+    padding: 5px;
+
+}
+
+
+
+.downerConntent ul li:nth-child(odd)
+
+
+
+{
+
+
+
+  background:#2196f317 ;
+
+
+
+}
+
+
+
+/*end viewbook*/
+
+
+
+
+
+
+
+/*Start Slid*/
+
+
+
+
+
+
+
+.CusInpMarg
+
+
+
+{
+
+
+
+    margin-top: 20px;
+
+
+
+    margin-bottom: 20px;
+
+
+
+}
+
+
+
+.slidecontainer {
+
+
+
+  margin-top: -20px;
+
+
+
+    margin-right: 4px;
+
+
+
+}
+
+
+
+#Amount
+
+
+
+{
+
+
+
+    font-size: 22px;
+
+
+
+    margin: 0 auto;
+
+
+
+    padding-bottom:2px;
+
+
+
+    display: block;
+
+
+
+    margin-top: 6px;
+
+
+
+    color: #1c4e71;
+
+
+
+  }
+
+
+
+
+
+
+
+.slider {
+
+
+
+    -webkit-appearance: none;
+
+
+
+    width: 100%;
+
+
+
+    height: 15px;
+
+
+
+    border-radius: 5px;
+
+
+
+    background: #d3d3d3;
+
+
+
+    outline: none;
+
+
+
+    opacity: 0.7;
+
+
+
+    -webkit-transition: .2s;
+
+
+
+    transition: opacity .2s;
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+.slider::-webkit-slider-thumb {
+
+
+
+    -webkit-appearance: none;
+
+
+
+    appearance: none;
+
+
+
+    width: 25px;
+
+
+
+    height: 25px;
+
+
+
+    border: 7px solid #333;
+
+
+
+    border-radius: 50%;
+
+
+
+    background: #fff;
+
+
+
+    cursor: pointer;
+
+
+
+}
+
+
+
+
+
+
+
+.slider::-moz-range-thumb {
+
+
+
+    width: 25px;
+
+
+
+    height: 25px;
+
+
+
+    border: 7px solid #333;
+
+
+
+    border-radius: 50%;
+
+
+
+    background: #fff;
+
+
+
+    cursor: pointer;
+
+
+
+}
+
+
+
+
+
+
+
+.CusFile
+
+
+
+{
+
+
+
+      cursor: pointer;
+
+
+
+  background-color: #eee;
+
+
+
+  width: 100%;
+
+
+
+  border:1px solid #ccc;
+
+
+
+  height: 30px;
+
+
+
+  position: relative;
+
+
+
+}
+
+
+
+.CusFile input[type ="file"] {
+
+
+
+  width: 100%;
+
+
+
+  height: 100%;
+
+
+
+  opacity: 0;
+
+
+
+  position: absolute;
+
+
+
+  top: 0;
+
+
+
+  left: 0;
+
+
+
+  z-index: 3
+
+
+
+}
+
+
+
+.CusFile:after 
+
+
+
+{
+
+
+
+
+
+
+
+  content: "رفع الصورة";
+
+
+
+  background-color: #333;
+
+
+
+  color: #fff;
+
+
+
+  padding-right: 15px;
+
+
+
+  width: 100px;
+
+
+
+  height: 30px;
+
+
+
+  position: absolute;
+
+
+
+  top: 0;
+
+
+
+  left:0;
+
+
+
+  line-height: 30px;
+
+
+
+}
+
+
+
+.CusFile span {
+
+
+
+    display: block;
+
+
+
+    padding-top: 2px;
+
+
+
+    padding-right: 12px;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Mouse-over effects */
+
+
+
+.slider:hover {
+
+
+
+    opacity: 1;
+
+
+
+    /* Fully shown on mouse-over */
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*End Slid*/
+
+
+
+
+
+
+
+
+
+
+
+/*End add Book*/
+
+
+
+
+
+
+
+
+
+
+
+/*End manage Book*/
+
+
+
+
+
+
+
+.manageTable .table {
+
+
+
+margin: 0 auto;
+
+
+
+  width: 50%;
+
+
+
+  max-width: 50%;
+
+
+
+}
+
+
+
+
+
+
+
+.manageTable .table a 
+
+
+
+{
+
+
+
+  margin-left: 10px;
+
+
+
+}
+
+
+
+.manageTable .table a:hover {
+
+
+
+
+
+
+
+  text-decoration: none;
+
+
+
+}
+
+
+
+.manageTable .btn
+
+
+
+{
+
+
+
+margin-top: 20px;
+
+
+
+}
+
+
+
+
+
+
+
+.manageTable .table .fa-trash
+
+
+
+{
+
+
+
+  color: #e02727;
+
+
+
+}
+
+
+
+.manageTable .table .fa-edit
+
+
+
+{
+
+
+
+  color: #5cb85c;
+
+
+
+}
+
+
+
+.notBook .alert-danger
+
+
+
+{
+
+
+
+    font-size: 21px;
+
+
+
+    width: 275px;
+
+
+
+    font-weight: bold;
+
+
+
+}
+
+
+
+.LogGroup input[type=checkbox], input[type=radio]
+
+
+
+{
+
+
+
+margin-right: 5px;
+
+
+
+}
+
+
+
+
+
+
+
+/*End mange  Book*/
+
+
+
+
+
+
+
+
+
+
+
+/*start profile*/
+
+
+
+
+
+
+
+.informaiton ul {
+
+
+
+  padding: 0px;
+
+
+
+  margin: 0px;
+
+
+
+}
+
+
+
+
+
+
+
+.informaiton ul li 
+
+
+
+{
+
+
+
+  padding: 10px;
+
+
+
+}
+
+
+
+.informaiton ul li:nth-child(odd) {
+
+
+
+
+
+
+
+  background-color: #0dbad012;
+
+
+
+}
+
+
+
+.informaiton ul span 
+
+
+
+{
+
+
+
+margin-right: 6px;
+
+
+
+  width: 80px;
+
+
+
+}
+
+
+
+.panel-body {
+
+
+
+  background: #f7fafc;
+
+}
+
+
+
+.informaiton .panel-default {
+
+
+
+
+
+
+
+  background-color: #fff;
+
+
+
+  width: 50%;
+
+
+
+  margin: auto;
+
+
+
+
+
+
+
+}
+
+
+
+.informaiton .panel-default>.panel-heading {
+
+
+
+  background: linear-gradient(45deg, #03A9F4 0%, #9E9E9E 100%);
+
+
+
+}
+
+
+
+.thumbnail .addDate
+
+
+
+{
+
+
+
+  text-align: right;
+
+
+
+  font-size: 13px;
+
+
+
+  color: #aaa;
+
+
+
+  font-weight: bold;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+/*End profile*/
+
+
+
+
+
+
+
+
+
+
+
+/*start Footer */
+
+
+
+.footer {
+
+
+
+  color: #333;
+
+
+
+  position: absolute;
+
+
+
+  right: 0;
+
+
+
+  bottom: 0;
+
+
+
+  left: 0;
+
+
+
+  padding: 1rem;
+
+
+
+    background-color: #ebf4f763;
+
+
+
+    text-align: center;
+
+
+
+
+
+
+
+}
+
+
+
+/*end Footer */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
