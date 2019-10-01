@@ -7,6 +7,13 @@ include 'init.php';
 
 
 
+
+if (isset($_SESSION['UserNameSession'])) {
+		header('Location:UI.php');
+		exit();;
+}
+
+
 if($_SERVER['REQUEST_METHOD'] == "POST") {
 
 	$username = filter_var($_POST['username'],FILTER_SANITIZE_STRING);
@@ -23,6 +30,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 		echo "<div class='loginErorrs'>";
 			echo "<div class='container alert alert-success'>  <i class='far fa-check-circle'></i> Welcome back you will be redirected now  </div>";
 		echo "</div>";
+
+  		$_SESSION['UserNameSession'] = $row['UserName'];
+  		$_SESSION['UserIDSession'] = $row['UserID'];
+
 		header("refresh:3 , url=UI.php");
 		exit();
 

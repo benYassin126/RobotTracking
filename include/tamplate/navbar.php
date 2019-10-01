@@ -8,7 +8,7 @@
 
       </ul>
       <ul class="logo nav navbar-right">
-        <li><h1 style="cursor: pointer;">Robot Tracking </h1> </li>
+        <li><a href="index.php"><h1>Robot Tracking </h1></a></li>
       </ul>
       
     </div>

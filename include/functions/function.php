@@ -1,12 +1,6 @@
 <?php
 
-//Finction to convert seconds unex to time
 
-function secondsToTime($seconds) {
-    $dtF = new \DateTime('@0');
-    $dtT = new \DateTime("@$seconds");
-    return $dtF->diff($dtT)->format('%a');
-}
 //Function to set Title
 
  function getTitle()
@@ -20,6 +14,36 @@ function secondsToTime($seconds) {
 	} else {
 		echo "Default";
 	}
+}
+
+//Funcuiton to get Robot data From DB
+function get_robot_data($UserID){
+    $con=mysqli_connect ("localhost", 'root', '','robottracking');
+    if (!$con) {
+        die('Not connected : ' . mysqli_connect_error());
+    }
+    // update location with location_status if admin location_status.
+    $sqldata = mysqli_query($con,"
+		SELECT RobotName,RobotType,LastHourLat,LastHourLng
+		FROM robots
+		INNER JOIN locations ON robots.RobotID = locations.RobotID
+		WHERE robots.UserID = $UserID;
+  ");
+
+    $rows = array();
+
+    while($r = mysqli_fetch_assoc($sqldata)) {
+        $rows[] = $r;
+
+    }
+
+    $indexed = array_map('array_values', $rows);
+    //  $array = array_filter($indexed);
+
+    echo json_encode($indexed);
+    if (!$rows) {
+        return null;
+    }
 }
 
 

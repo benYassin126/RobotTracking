@@ -1,5 +1,5 @@
 <?php
-
+SESSION_START();
 $PageTitle = "Sign Up";
 include 'init.php';
 
@@ -54,6 +54,13 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 		echo "<div class='loginErorrs'>";
 			echo "<div class='container alert alert-success'>  <i class='far fa-check-circle'></i>  Welcome  " . $username ."  successfully registered  </div>";
 		echo "</div>";
+
+		$statment = $db->prepare("SELECT * FROM users WHERE UserName = ?");
+	 	$statment->execute(array($username)); //execute statment
+	 	$row = $statment->fetch(); // Get Data In Array
+
+		$_SESSION['UserNameSession'] = $username;
+  		$_SESSION['UserIDSession'] = $row['UserID'];
 
 		header("refresh:3 , url=UI.php");
 		exit();
