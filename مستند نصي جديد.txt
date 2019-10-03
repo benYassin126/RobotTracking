@@ -1,0 +1,3 @@
+add fit
+design info window
+edit icon size

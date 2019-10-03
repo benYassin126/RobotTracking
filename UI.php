@@ -36,7 +36,7 @@ $UserIDSession = $_SESSION['UserIDSession'];
 				function initMap() {
 					var CenterOfTabuk = {lat: 28.392127, lng:36.559459};
 					var map = new google.maps.Map(
-					document.getElementById('map'), {zoom: 15, center: CenterOfTabuk});
+					document.getElementById('map'), {zoom: 20, center: CenterOfTabuk});
 					//var marker = new google.maps.Marker({position: CenterOfTabuk, map: map});
 					var robotData = <?php echo get_robot_data($UserIDSession)?>;
 					console.log(robotData);
@@ -46,7 +46,9 @@ $UserIDSession = $_SESSION['UserIDSession'];
 					var Humanoids_icon = 'layout/img/robots_icon/Humanoids.png';
 					var Military_icon = 'layout/img/robots_icon/Military.png';
 					var markers = {};
-			        var i ; var confirmed = 0; var icon = "";
+			        var i ;var icon = "";
+			        var bounds = new google.maps.LatLngBounds();
+
 			        for (i = 0; i < robotData.length; i++) {
 			        	switch(robotData[i][1]) {
 						  case "Consumer":
@@ -64,21 +66,36 @@ $UserIDSession = $_SESSION['UserIDSession'];
 						  default:
 						  icon = "null";
 						}
+					var myLatLng = new google.maps.LatLng(robotData[i][2], robotData[i][3]);
 			            marker = new google.maps.Marker({
 			                position: new google.maps.LatLng(robotData[i][2], robotData[i][3]),
 			                map: map,
 			                icon :   icon,
-			                html: "<div class='1'> Name:" + robotData[i][0] +
-			                	  "</div>"
+			                html: 	"<div class='MaskPanel'>" +
+			                		 "<div class='panel panel-info'>" +
+			                		 	"<div class='panel-heading'>Robot Informaiton</div>"+
+			                		 	"<div class='panel-body'>"+
+			                		 		"Name: <span class='CusInfo'>"  + robotData[i][0] +  "</span>"+
+			                		 		"</br> Type:  <span class='CusInfo'>" +  robotData[i][1] + "</span>"+
+			                		 		"</br> lat:  <span class='CusInfo'>" +  robotData[i][2] + "</span>"+
+			                		 		"</br> lng:  <span class='CusInfo'>" +  robotData[i][3] + "</span>"+
+			                		 		"</div>"+
+			                		 	"</div>" +
+			                		 "</div>"
+			                	  
 			            });
-			    google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                return function() {
-                    infowindow = new google.maps.InfoWindow();
-                    infowindow.setContent(marker.html);
-                    infowindow.open(map, marker);
-                }
-            })(marker, i));
-			        }
+
+
+			            bounds.extend(myLatLng);
+					    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+		                return function() {
+		                    infowindow = new google.maps.InfoWindow();
+		                    infowindow.setContent(marker.html);
+		                    infowindow.open(map, marker);
+		                }
+		            })(marker, i));
+					 }
+					 map.fitBounds(bounds);
 				}
 		 	</script>
 		</div>

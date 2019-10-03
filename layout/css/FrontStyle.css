@@ -262,9 +262,31 @@ margin-top: 2px;
 
 }
 
+.panel-info>.panel-heading
+{
+  font-weight: bold;
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    font-size: 15px;
+}
+.panel-body{
+      padding: 12px;
+    color: #333;
+    font-size: 15px
+}
+.MaskPanel
+{
+    margin-left: 25px;
+    padding: 5px;
+    margin-bottom: -9px;
 
+}
+.CusInfo{
+    font-weight: bold;
+    color: #1baec1;
 
-
+}
 
 
 
