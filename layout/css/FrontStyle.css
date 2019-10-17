@@ -271,9 +271,10 @@ margin-top: 2px;
     font-size: 15px;
 }
 .panel-body{
-      padding: 12px;
+    padding: 15px;
     color: #333;
-    font-size: 15px
+    font-size: 15px;
+    line-height: 20px;
 }
 .MaskPanel
 {
@@ -286,6 +287,11 @@ margin-top: 2px;
     font-weight: bold;
     color: #1baec1;
 
+}
+.buttnClass
+{    margin-top: 20px;
+    font-size: 23px;
+    font-weight: bold;
 }
 
 

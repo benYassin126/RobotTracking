@@ -24,7 +24,7 @@ function get_robot_data($UserID){
     }
     // update location with location_status if admin location_status.
     $sqldata = mysqli_query($con,"
-		SELECT RobotName,RobotType,LastHourLat,LastHourLng
+		SELECT RobotName,RobotType,LastHourLat,LastHourLng,LastDayLat,LastDayLng
 		FROM robots
 		INNER JOIN locations ON robots.RobotID = locations.RobotID
 		WHERE robots.UserID = $UserID;

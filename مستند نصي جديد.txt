@@ -1,3 +1,1 @@
-add fit
-design info window
-edit icon size
+Cusmize cp and design it
