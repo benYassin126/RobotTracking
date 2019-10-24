@@ -78,7 +78,7 @@ a {
     }
 
 
-.btn-success,.btn-primary
+.btn-primary
 {
   background: linear-gradient(45deg, #607D8B 0%, #00BCD4 100%);
 }
@@ -114,7 +114,51 @@ input[type=file] {
 
 }
 
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
 
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: red;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#ClProf{
+
+      width: 50%;
+    margin: 0 auto;
+    margin-top: 23px;
+
+}
 
 
 
@@ -289,9 +333,13 @@ margin-top: 2px;
 
 }
 .buttnClass
-{    margin-top: 20px;
-    font-size: 23px;
+{    
+  margin: 10px auto;
+    font-size: 15px;
     font-weight: bold;
+    padding: 7px;
+    margin-right: 2px;
+
 }
 
 
@@ -643,6 +691,73 @@ box-shadow: -1px 0px 20px 0px #aaa;
   height: 500px;
   background-color: grey;
  }
+ .LeftContent h3
+ {
+  color: #277984;
+ }
+  .LeftContent 
+  {
+    margin-top: -50px;
+    text-align: center;
+  }
+   .LeftContent .upUi {
+      margin-top: -10px;
+      margin-bottom: -10px;
+   }
+ .LeftContent .prof
+ {
+  width: 70px;
+  margin: 0 auto;
+ }
+
+.table-bordered>tbody>tr>td,
+
+.table-bordered>tbody>tr>th,
+
+.table-bordered>tfoot>tr>td,
+
+.table-bordered>tfoot>tr>th,
+
+.table-bordered>thead>tr>td,
+
+.table-bordered>thead>tr>th
+
+     {
+
+       border: 1px solid #aaa;
+       padding: 5px;
+
+     }
+
+ .main-table
+
+{
+
+  -web-kit-box-shadow: 0px 3px 27px #ccc;
+
+  -moz-kit-box-shadow: 0px 3px 27px #ccc;
+
+  -o-kit-box-shadow: 0px 3px 27px #ccc;
+
+  box-shadow: 0px 3px 27px #ccc;
+
+
+
+}
+
+.main-table td {
+
+  vertical-align: middle !important;
+
+}
+
+.main-table tr:first-child td {
+
+  background-color: #333;
+
+  color: #fff;
+
+}
 .RightContent
 
 {

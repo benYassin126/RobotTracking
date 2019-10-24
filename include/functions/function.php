@@ -1,5 +1,20 @@
 <?php
 
+function getAll($fields , $table , $where = NULL , $and = NULL , $orderfield , $ordering ="DESC") {
+
+	global $db;
+
+	$stmt = $db->prepare("SELECT $fields FROM $table $where $and ORDER BY $orderfield $ordering");
+
+	$stmt->execute();
+
+	$row =$stmt->fetchAll();
+
+
+
+	return $row;
+
+}
 
 //Function to set Title
 

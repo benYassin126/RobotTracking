@@ -36,8 +36,6 @@ if ($do == "manage") {
 
 						<td>Email</td>
 
-						<td>Cty</td>
-
 						<td>Registerd Date</td>
 
 						<td>Control</td>
@@ -59,8 +57,6 @@ if ($do == "manage") {
 								echo "<td> " . $OneUser['UserName'] ."</td>";
 
 								echo "<td> " . $OneUser['Email'] ."</td>";
-
-								echo "<td> " . $OneUser['City'] ."</td>";
 
 								echo "<td> " . $OneUser['Date'] ."</td>";
 
@@ -164,15 +160,6 @@ if ($do == "manage") {
 				 </div>
 
 
-	 			<div class="input-group">
-
-				  <span class="input-group-addon " id="basic-addon1"><i class="fa fa-user"></i> <label>City <span class="alstrx">*</span></label></span>
-
-				  <input type="text" class="input-lg form-control" name="City" required="required" value="<?php echo $row['City']; ?>">
-
-				 </div>
-
-
 
 	 			<div class="input-group">
 
@@ -250,7 +237,6 @@ if ($do == "manage") {
 
 		$Email = $_POST['Email'];
 
-		$City = $_POST['City'];
 
 		$Admin = $_POST['Admin'];
 
@@ -299,14 +285,14 @@ if ($do == "manage") {
 
 			 		SET 
 
-			 		UserName = ? ,Password = ?  , Email = ?, City = ?,Admin = ?
+			 		UserName = ? ,Password = ?  , Email = ?,Admin = ?
 
 			 		WHERE 
 
 			 		UserID = ?");
 
 
-			 	$stmt->execute(array($UserName ,$newPassword , $Email ,$City,$Admin ,$UserID)); //execute statment
+			 	$stmt->execute(array($UserName ,$newPassword , $Email ,$Admin ,$UserID)); //execute statment
 
 
 			 	$count = $stmt->rowCount(); // return number of colume that executed

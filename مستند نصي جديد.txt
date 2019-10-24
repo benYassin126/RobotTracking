@@ -1,1 +1,2 @@
-Cusmize cp and design it
+show line
+show marker on map
