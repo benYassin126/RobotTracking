@@ -234,77 +234,6 @@ input[type=file] {
 
 
 
-.selectboxit-text
-
-
-
-{
-
-
-
-  float: right;
-
-
-
-  padding-right: 20px;
-
-
-
-  font-size: 1.2em;
-
-
-
-font-family: 'Tajawal', sans-serif;
-
-margin-top: 2px;
-
-
-
-}
-
-
-
-.selectboxit-option-icon-container {
-
-
-
-    float: right;
-
-
-
-}
-
-
-
-.selectboxit-container {
-
-
-
-  font-family: 'Tajawal', sans-serif;
-
-
-
-}
-
-
-
-
-
-
-
-.selectboxit-option, .selectboxit-optgroup-header
-
-
-
-{
-
-
-
-  text-align: right;
-
-
-
-}
 
 .panel-info>.panel-heading
 {
@@ -685,11 +614,14 @@ box-shadow: -1px 0px 20px 0px #aaa;
 
 
 /*STRART UI*/
-#map 
+#map,#map1
 {
   width: 110%;
   height: 500px;
   background-color: grey;
+ }
+ #map1{
+  display: none;
  }
  .LeftContent h3
  {

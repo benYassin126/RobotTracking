@@ -17,7 +17,17 @@ $UserIDSession = $_SESSION['UserIDSession'];
 	//to fill input for edit profile
 	$stmt = $db->prepare("SELECT * FROM users WHERE UserID = ?");
  	$stmt->execute(array($UserIDSession)); //execute statment
-	$row = $stmt->fetch();
+	$rowForUsers = $stmt->fetch();
+
+	//to fill input for edit robot
+	$stmt = $db->prepare("		
+		SELECT RobotName,RobotType,LastHourLat,LastHourLng,LastDayLat,LastDayLng
+		FROM robots
+		INNER JOIN locations ON robots.RobotID = locations.RobotID
+		WHERE robots.UserID = ?");
+ 	$stmt->execute(array($UserIDSession)); //execute statment
+	$rowForRobots = $stmt->fetch();
+
 	//to get number of robot
 	$statment = $db->prepare("SELECT * FROM robots WHERE UserID = ?");
  	$statment->execute(array($UserIDSession)); //execute statment
@@ -29,7 +39,7 @@ if (isset($_GET['do'])) {
 	$do = $_GET['do'];
 }
 
-if (isset($do) && $do = "update") {
+if (isset($_GET['do']) && $_GET['do'] == "update") {
 	
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
@@ -100,8 +110,81 @@ if (isset($do) && $do = "update") {
 
 		Redirect ('' , 3);
 	}
+
+}elseif (isset($_GET['do']) && $_GET['do'] == 'add') {
+	
+
+if($_SERVER['REQUEST_METHOD'] == "POST") {
+
+		$UserID =  $_SESSION['UserIDSession'];
+		$RobotName = $_POST['RobotName'];
+		$RobotType = $_POST['RobotType'];
+
+		$erorrArray = array();
+
+ 	if (empty($RobotName) || empty($RobotType)) {
+
+ 		$erorrArray [] = "Plase Fill all inputs";
+ 		# code...
+ 	}
+
+ 	if (strlen($RobotName) < 3 ) {
+
+ 		$erorrArray [] = "Robot Nmae Cannot be less Than 3 Charectrs ";
+ 		
+ 	}
+
+ 	if (empty($erorrArray)) {
+ 		
+	// update new value
+
+			 	$stmt = $db->prepare("
+			 		INSERT INTO  
+			 		robots
+			 		(RobotName , RobotType, UserID, Date)
+			 		VALUES 
+			 		(? , ? ,?, now()) 
+			 		");
+
+
+			 	$stmt->execute(array($RobotName ,$RobotType,$UserID)); //execute statment
+		
+			 	$count = $stmt->rowCount(); // return number of colume that executed
+
+			 					//sucsess Massege 
+
+
+
+			
+
+				$stmt2 = $db->prepare("SELECT RobotID FROM robots WHERE RobotName = ?");
+
+
+			 	$stmt2->execute(array($RobotName));
+
+			 	$A = $stmt2->fetchAll();
+			 	
+						foreach ($A as  $Onerobot) {
+			 	$stmt3 = $db->prepare("
+			 		INSERT INTO  
+			 		locations
+			 		(RobotID)
+			 		VALUES 
+			 		(?) 
+			 		");
+			 	$stmt3->execute(array($Onerobot['RobotID'])); //execute statment
+		
+							
+							}
+
+
 }
 
+
+
+}
+
+}
 
 ?> 
 
@@ -114,12 +197,10 @@ if (isset($do) && $do = "update") {
   		<h1 class="text-center">Edit Profile </h1>
   		<div class="BackLogin">
 				<form action = "?do=update" method = "POST">
-
-
-					<input type="hidden"  name="userid" value="<?php echo $row['UserID']; ?>">
+					<input type="hidden"  name="userid" value="<?php echo $rowForUsers['UserID']; ?>">
 		 			<div class="input-group LogGroup">
 					  <span class="input-group-addon " id="basic-addon1"><i class="fas fa-user"></i> <label> Username    <span class="alstrx">*</span></label></span>
-					  <input type="text" value="<?php echo $row['UserName']; ?>" required="required" class=" form-control"  name="Username">
+					  <input type="text" value="<?php echo $rowForUsers['UserName']; ?>" required="required" class=" form-control"  name="Username">
 
 					 </div>
 
@@ -127,22 +208,20 @@ if (isset($do) && $do = "update") {
 		 			<div class="input-group">
 					  <span class="input-group-addon" id="basic-addon1"><i class="fas fa-lock"></i> <label> New Password <span class="alstrx">*</span></label></span>
 					  <input type="Password" class=" form-control Password" name="new-password"   autocomplete="new-password">
-					  <input type="hidden"  value="<?php echo $row['Password']; ?>"  class="input-lg form-control" name="old-Password" >
+					  <input type="hidden"  value="<?php echo $rowForUsers['Password']; ?>"  class="input-lg form-control" name="old-Password" >
 					</div>
 
 		 			<div class="input-group LogGroup">
 					  <span class="input-group-addon " id="basic-addon1"><i class="fas fa-email"></i> <label>Email   <span class="alstrx">*</span></label></span>
-					  <input type="Email" value="<?php echo $row['Email']?>" required="required" class=" form-control" name="Email">
+					  <input type="Email" value="<?php echo $rowForUsers['Email']?>" required="required" class=" form-control" name="Email">
 					 </div>
 					<div class="input-group btnLogo">
 						<input type="submit" value="Save"  class="btn btn-success btn-lg ">
 					</div>    
-					</div>
-
+			</div>
 				</form>
 				<button id="ClProf" class="btn btn-danger btn-block">Close</button>
 			</div>
-
   </div>
 
 </div>
@@ -153,20 +232,48 @@ if (isset($do) && $do = "update") {
 
   <!-- Modal content -->
   <div class="modal-content">
-    <button id="ClEd" class="btn btn-danger btn-block">Close</button>
+
+<h1 class="text-center">Add Robot</h1>
+<hr class="LineTitle">
+
+			<div class="BackLogin">
+				<form action = "?do=add" method = "POST"enctype="multipart/form-data">
+
+		 			<div class="input-group LogGroup">
+					  <span class="input-group-addon " id="basic-addon1"><i class="far fa-bookmark"></i> <label> Robot Name :  <span class="alstrx">*</span></label></span>
+					  <input type="text" placeholder="Enter Name Of Robot Here ...."  class="form-control" name="RobotName"  autofocus="true"  required="required">
+					
+					 </div>
+
+		 			<div class="input-group">
+					  <span class="input-group-addon" id="basic-addon1"><i class="fas fa-paste"></i> <label>Robot Type :<span class="alstrx">*</span></label></span>
+					  <select name="RobotType">
+					  		<option value="0"></option>
+						 	<option value="Drones">Drones</option>
+						 	<option value="Consumer">Consumer</option>
+						 	<option value="Humanoids">Humanoids</option>
+						 	<option value="Military">Military</option>
+					  </select>
+					</div>
+					<div class="input-group btnLogo">
+						<input type="submit" value="Add Robot"  class="btn btn-success btn-lg ">
+					</div>
+				</form>
+				<button id="ClEd" class="btn btn-danger btn-block">Close</button>
+			</div>
     </div>
   </div>
 
 <!-- START HTML-->
 <div class="container">
-	<div class="row">
+	<div class="rowForUsers">
 		<!-- START CODING LEFT SIDE-->
 		 <div class="LeftContent col-lg-4 col-xs-4">
 			 <h3 class="text-center">Control Panel</h3>
 			 <hr>
 			 <div class="upUi">
 				 <img class='img img-responsive prof'src="layout/img/profile.png">
-				 <p>UserNmae : <?php echo $row['UserName']; ?> </p>
+				 <p>UserNmae : <?php echo $rowForUsers['UserName']; ?> </p>
 				 <p>Number Of Robots : <?php echo $NumberOfRobots; ?></p>
 				 <button id = 'profileBtn'class="btn btn-success">Edit Profile</button>
 				 <a href="Logout.php"><button class="btn btn-danger">Logout</button></a> 	
@@ -208,9 +315,9 @@ if (isset($do) && $do = "update") {
 
 
 
-								 <a id='EditBtn' class='btn btn-success btn-sm'> <i class='fa fa-edit'> </i>Edit</a> 
+								 <a href='editRobot.php?do=edit&RobotID=" . $OneRobot['RobotID'] . "' class='btn btn-success btn-sm' value='".   $OneRobot['RobotID']   ."'> <i class='fa fa-edit'> </i>Edit</a> 
 
-							 	 <a href='?do=delete&UserID=" . $OneRobot['UserID'] . "' class='btn btn-danger  confirm  btn-sm'> <i class='fas fa-times'></i> Delete</a>";
+							 	 <a href='editRobot.php?do=delete&RobotID=" . $OneRobot['RobotID'] . "' class='btn btn-danger  confirm  btn-sm'> <i class='fas fa-times'></i> Delete</a>";
 
 
 
@@ -240,7 +347,7 @@ if (isset($do) && $do = "update") {
 
 			</div>
 			 </div>
-			 <button class="btn btn-primary btn-lg">Add ROBOT</button>
+			 <button id="EditBtn" class="btn btn-primary btn-lg">Add ROBOT</button>
 			 
 
 		 </div>
@@ -248,12 +355,50 @@ if (isset($do) && $do = "update") {
 		<!-- START CODING RIGHT SIDE-->
 		 <div class="RightContent col-lg-8 col-xs-8">
 		 	<div id="map"></div>
+		 	<div class="text-center">
+		 		<button class="btn btn-primary" onclick="initMap()">RestMap</button>	
+		 	</div>
+		 	
 		 	<?php
 
 
 		 	 ?>
 		 		
 		 	<script type="text/javascript">
+
+			            function showLine(lat1,lng1,lat2,lng2) {
+							var map = new google.maps.Map(document.getElementById('map'), {
+							zoom: 13,
+							center: {lat: lat1, lng:lng1},
+							mapTypeId: 'terrain'
+							});
+							var flightPlanCoordinates = [
+							{lat: lat1, lng: lng1},
+							{lat: lat2, lng: lng2}
+							];
+					        var flightPath = new google.maps.Polyline({
+					          path: flightPlanCoordinates,
+					          geodesic: true,
+					          strokeColor: '#FF0000',
+					          strokeOpacity: 1.0,
+					          strokeWeight: 2
+					        });
+
+					        flightPath.setMap(map);
+					       var StartMarker = {lat: lat1, lng:lng1};
+							var marker = new google.maps.Marker({
+							position: StartMarker,
+							map: map,
+							title: 'START'
+							});
+
+					       var EndMarker = {lat: lat2, lng:lng2};
+							var marker = new google.maps.Marker({
+							position: EndMarker,
+							map: map,
+							title: 'END'
+							});
+						}
 
 
 					var robotData = <?php echo get_robot_data($UserIDSession)?>;
@@ -417,13 +562,12 @@ if (isset($do) && $do = "update") {
 			                		 		"</br>"+
 			                		 			 "<a target='_blank' href='https://www.google.com/maps/search/?api=1&query=" + robotData[i][2] + "," + robotData[i][3] + "'> "+
 			                		 				"<buttn class='btn btn-primary buttnClass'>GO To Robot !!</buttn></a>"+
+			                		 				"<buttn onclick='showLine("+		 robotData[i][2]		+","+  robotData[i][3]  +","+		 robotData[i][4]		+","+  robotData[i][5]  +")' class='btn btn-primary buttnClass'>Show Last Day Line !!</buttn>"+
 			                		 		"</div>"+
 			                		 	"</div>" +
 			                		 "</div>"
 			                	  
 			            });
-
-	
 
 
 			            bounds.extend(myLatLng);
@@ -442,7 +586,7 @@ if (isset($do) && $do = "update") {
 		 	</script>
 		</div>
 		<!-- END CODING RIGHT SIDE-->
-	</div> <!-- END ROW-->
+	</div> <!-- END rowForUsers-->
 </div> <!-- END Conter-->
 
 

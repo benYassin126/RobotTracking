@@ -1,0 +1,227 @@
+<?php
+SESSION_START();
+
+$PageTitle = "Edit Robot";
+
+include 'init.php';
+
+
+if (isset($_GET['do'])) {
+
+	$do = $_GET['do'];
+
+}else {
+		//if come not REQUEST_METHOD
+		echo "<div class='alert alert-danger container'> come not REQUEST_METHOD</div>";
+
+		Redirect ('' , 3);
+}
+
+if ($do == 'edit') {
+
+
+		$RobotID = $_GET['RobotID'];
+		$UserID = $_SESSION['UserIDSession'];
+
+		$statment = $db->prepare("		
+		SELECT RobotName,RobotType,LastHourLat,LastHourLng,LastDayLat,LastDayLng
+		FROM robots
+		INNER JOIN locations ON robots.RobotID = locations.RobotID
+		WHERE robots.RobotID = ? AND locations.RobotID = ? ");
+	 	$statment->execute(array($RobotID , $RobotID)); //execute statment
+	 	$row = $statment->fetch(); // Get Data In Array
+	 	$count = $statment->rowCount(); // return number of colume that executed
+
+	 	if ($count > 0) {
+
+?>
+
+<h1 class="text-center">Edit Robot</h1>
+<hr class="LineTitle">
+
+			<div class="BackLogin">
+				<form action = "?do=update" method = "POST"enctype="multipart/form-data">
+
+		 			<div class="input-group LogGroup">
+					  <span class="input-group-addon " id="basic-addon1"><i class="far fa-bookmark"></i> <label> Robot Name :  <span class="alstrx">*</span></label></span>
+					  <input type="text" placeholder="Enter Name Of Robot Here ...." value="<?php if(isset($row['RobotName'])) { echo $row['RobotName']; } ?>" class="form-control" name="RobotName"  autofocus="true"  required="required">
+					  <input type="hidden" name="RobotID"  value="<?php if(isset($RobotID)) { echo $RobotID; } ?>">
+
+					 </div>
+
+		 			<div class="input-group">
+					  <span class="input-group-addon" id="basic-addon1"><i class="fas fa-paste"></i> <label>Robot Type :<span class="alstrx">*</span></label></span>
+					  <select name="RobotType">
+					  		<option <?php if (isset($row['RobotType']) && $row['RobotType'] == 0) {echo "selected";}?> value="0"></option>
+						 	<option <?php if (isset($row['RobotType']) && $row['RobotType'] == "Drones") {echo "selected";}?> value="Drones">Drones</option>
+						 	<option <?php if (isset($row['RobotType']) && $row['RobotType'] == "Consumer") {echo "selected";}?> value="Consumer">Consumer</option>
+						 	<option <?php if (isset($row['RobotType']) && $row['RobotType'] == "Humanoids") {echo "selected";}?> value="Humanoids">Humanoids</option>
+						 	<option <?php if (isset($row['RobotType']) && $row['RobotType'] == "Military") {echo "selected";}?> value="Military">Military</option>
+					  </select>
+					</div>
+					<p>* You Can use <a target="_blank" href="https://www.google.com/maps">Google MAPs </a> to fill in the following fields</p>
+
+		 			<div class="input-group LogGroup">
+					  <span class="input-group-addon " id="basic-addon1"><i class="fas fa-map-marker"></i> <label> New Lat :  <span class="alstrx">*</span></label></span>
+					  <input type="text" placeholder="Enter latitude Of Robot Here ...." value="<?php if(isset($row['LastHourLat'])) { echo $row['LastHourLat']; } ?>" class="form-control" name="LastHourLat"  autofocus="true"  required="required">
+					 </div>
+
+		 			<div class="input-group LogGroup">
+					  <span class="input-group-addon " id="basic-addon1"><i class="fas fa-map-marker"></i> <label> New Lng :  <span class="alstrx">*</span></label></span>
+					  <input type="text" placeholder="Enter longitude Of Robot Here ...." value="<?php if(isset($row['LastHourLng'])) { echo $row['LastHourLng']; } ?>" class="form-control" name="LastHourLng"  required="required">
+					 </div>
+					<div class="input-group btnLogo">
+						<input type="submit" value="Edit Robot"  class="btn btn-success btn-lg ">
+					</div>
+				</form>
+
+
+
+<?php
+}else{
+		//if come not REQUEST_METHOD
+		echo "<div class='alert alert-danger container'> No Robot!</div>";
+
+		Redirect ('' , 3);
+}
+
+}elseif ($do == "update") {
+
+
+	if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+
+
+		$RobotID = $_POST['RobotID'];
+		$RobotName = $_POST['RobotName'];
+		$RobotType = $_POST['RobotType'];
+		$LastHourLat = $_POST['LastHourLat'];
+		$LastHourLng = $_POST['LastHourLng'];
+
+
+		$erorrArray = array();
+
+ 	if (strlen($RobotName) < 3) {
+
+
+
+ 		$erorrArray [] = "robot Name Biger than 3 Charecter";
+
+ 		
+
+ 	}
+
+
+ 	if (empty($erorrArray)) {
+
+
+			 	$stmt = $db->prepare("
+					UPDATE 
+					robots t1, locations t2 
+					SET t1.RobotName = ? , t1.RobotType = ? , t2.LastHourLat = ? , t2.LastHourLng = ? 
+					WHERE t1.RobotID = ? AND t2.RobotID = ?
+			 		");
+
+
+			 	$stmt->execute(array($RobotName,$RobotType,$LastHourLat,$LastHourLng,$RobotID,$RobotID)); //execute statment
+		
+			 	$count = $stmt->rowCount(); // return number of colume that executed
+
+
+
+			 	echo "<div class='alert alert-success container'>done There is " . $count . " Affected </div>";
+
+			 	
+			 		header("refresh:2 , url=UI.php");
+					exit();
+
+ 		
+
+
+
+ 	}else {
+
+
+
+ 		//if there are erorr not sent and show erorr
+
+		 foreach ($erorrArray as  $msg) {
+
+
+
+		 		echo "<div class='alert alert-danger container'> $msg</div>";
+
+		 }
+
+
+
+		 Redirect ('' ,'back', 3);
+
+
+
+
+
+ 	}
+
+		
+
+	}else {
+
+		//if come not REQUEST_METHOD
+
+		echo "<div class='alert alert-danger container'> come not REQUEST_METHOD</div>";
+
+
+
+		Redirect ('' , 3);
+
+	}
+
+
+
+
+
+}elseif (isset($_GET['do']) && $_GET['do'] == "delete" ) {
+
+
+		$RobotID = $_GET['RobotID'];
+		$UserID = $_SESSION['UserIDSession'];
+
+		$statment = $db->prepare("DELETE FROM robots  WHERE RobotID = ? AND UserID = ?");
+	 	$statment->execute(array($RobotID,$UserID)); //execute statment
+	 	$count = $statment->rowCount(); // return number of colume that executed
+
+	 	if ($count > 0) {
+
+	 	//Seccess Msg
+		echo "<div class='loginErorrs'>";
+			echo "<div class='container alert alert-success'>  <i class='far fa-check-circle'></i> Deleted successfully </div>";
+		echo "</div>";
+
+		header("refresh:3 , url=UI.php");
+		exit();
+	 		
+	 	}else {
+ 			echo "<div class='loginErorrs'>";
+ 				echo "<div class='container alert alert-danger'>  <i class='fa fa-times'></i> ERORR ROBOT NOT FOUND !</div>";
+ 			echo "</div>";
+	 	//Redairct After Done Update
+		header("refresh:2 , url=UI.php");
+		exit();
+	 	}
+
+
+
+
+}
+
+?> 
+
+<?php
+
+include $tmpl . 'footer.php';
+
+
+ ?>
+
+ 
