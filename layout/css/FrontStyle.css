@@ -84,7 +84,7 @@ a {
 }
 
 
-.alert-success
+.alert-success,.alert-danger
 
 
 
@@ -96,7 +96,7 @@ a {
 
 
 
-  margin: 0 auto;
+  margin: 5px auto;
 
 
 

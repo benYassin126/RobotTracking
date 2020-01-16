@@ -20,11 +20,9 @@ $UserIDSession = $_SESSION['UserIDSession'];
 	$rowForUsers = $stmt->fetch();
 
 	//to fill input for edit robot
-	$stmt = $db->prepare("		
-		SELECT RobotName,RobotType,LastHourLat,LastHourLng,LastDayLat,LastDayLng
+	$stmt = $db->prepare("SELECT * 
 		FROM robots
-		INNER JOIN locations ON robots.RobotID = locations.RobotID
-		WHERE robots.UserID = ?");
+		WHERE UserID = ?");
  	$stmt->execute(array($UserIDSession)); //execute statment
 	$rowForRobots = $stmt->fetch();
 
@@ -119,6 +117,20 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 		$UserID =  $_SESSION['UserIDSession'];
 		$RobotName = $_POST['RobotName'];
 		$RobotType = $_POST['RobotType'];
+		$SafeArea = $_POST['SafeArea'];
+		$DangerPlace = array();
+
+
+		if (isset($_POST['place1'])) {
+			$DangerPlace [] = $_POST['place1'];
+		}
+		if (isset($_POST['place2'])) {
+			$DangerPlace [] = $_POST['place2'];
+		}
+
+		$DangerPlaceStr = implode(",", $DangerPlace);
+
+
 
 		$erorrArray = array();
 
@@ -134,6 +146,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
  		
  	}
 
+
+
  	if (empty($erorrArray)) {
  		
 	// update new value
@@ -141,13 +155,13 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 			 	$stmt = $db->prepare("
 			 		INSERT INTO  
 			 		robots
-			 		(RobotName , RobotType, UserID, Date)
+			 		(RobotName , RobotType, UserID, Date,SafeArea,DangerPlace)
 			 		VALUES 
-			 		(? , ? ,?, now()) 
+			 		(? , ? ,?, now(),?,?) 
 			 		");
 
 
-			 	$stmt->execute(array($RobotName ,$RobotType,$UserID)); //execute statment
+			 	$stmt->execute(array($RobotName ,$RobotType,$UserID,$SafeArea,$DangerPlaceStr)); //execute statment
 		
 			 	$count = $stmt->rowCount(); // return number of colume that executed
 
@@ -255,6 +269,20 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 						 	<option value="Military">Military</option>
 					  </select>
 					</div>
+					<p>Securty Chose:</p>
+					<div class="input-group LogGroup">
+					  <span class="input-group-addon " id="basic-addon1"><i class="far fa-bookmark"></i> <label> Safe Area :  <span class="alstrx">*</span></label></span>
+					  <input type="number" placeholder="Enter The distance"  class="form-control" name="SafeArea"  value="50">
+					
+					 </div>
+
+					<div class="input-group LogGroup">
+					    <span class="input-group-addon " id="basic-addon1"><i class="far fa-bookmark"></i> <label> Safe Area :  <span class="alstrx">*</span></label></span>
+						<input type="checkbox" name="place1" value="MilitaryCity" checked> Military City<br>
+						<input type="checkbox" name="place2" value="Airport" checked>Airport<br>
+					
+					 </div>
+
 					<div class="input-group btnLogo">
 						<input type="submit" value="Add Robot"  class="btn btn-success btn-lg ">
 					</div>
@@ -298,8 +326,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 
 
 					<?php
+						$stmt = $db->prepare("SELECT * FROM Robots WHERE UserID = $UserIDSession");
 
-						$AllRobots = getAll("*" , "robots" , '' ,'' , "RobotID" ,"DESC"); // use getAll Function to get all records
+	$stmt->execute();
+
+	$AllRobots =$stmt->fetchAll();
 
 						foreach ($AllRobots as  $OneRobot) {
 
@@ -348,17 +379,64 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 			</div>
 			 </div>
 			 <button id="EditBtn" class="btn btn-primary btn-lg">Add ROBOT</button>
+
+
+			 <hr>
+
+
+			 	<h3 class="text-center">Hestory of robotrs</h3>
+
+			<div class="BackLogin">
+				<form action = "Hestory.php" method = "POST"enctype="multipart/form-data">
+
+		 			<div class="input-group">
+					  <span class="input-group-addon" id="basic-addon1"><i class="fas fa-paste"></i> <label>Robot Name :<span class="alstrx">*</span></label></span>
+					  <select name="RobotID">
+					  		<?php foreach ($AllRobots as  $OneRobot) {
+
+							echo "<option value=". $OneRobot['RobotID'] . ">" . $OneRobot['RobotName'] ."</option>";
+						}
+							?>
+					  </select>
+					</div>
+
+		 			<div class="input-group">
+					  <span class="input-group-addon" id="basic-addon1"><i class="fas fa-paste"></i> <label>From :<span class="alstrx">*</span></label></span>
+					  <input type="datetime-local" name="StartDate">
+					</div>
+		 			<div class="input-group">
+					  <span class="input-group-addon" id="basic-addon1"><i class="fas fa-paste"></i> <label>To<span class="alstrx">*</span></label></span>
+					  <input type="datetime-local" name="EndDate">
+					</div>
+					<div class="input-group btnLogo">
+						<input type="submit" value="search"  class="btn btn-success btn-lg ">
+					</div>
+				</form>
+			</div>
+		 	
+
 			 
 
 		 </div>
 		<!-- END CODING LEFT SIDE-->
+
 		<!-- START CODING RIGHT SIDE-->
 		 <div class="RightContent col-lg-8 col-xs-8">
+		 	<div class="alert">
+		 		<h3 style="color: red;font-weight: bold;">*ALERTS :</h3>
+		 		<hr>
+		 		<div id="alert">
+		 			
+		 		</div>
+		 	</div>
+
+
+		 	<hr>
 		 	<div id="map"></div>
 		 	<div class="text-center">
 		 		<button class="btn btn-primary" onclick="initMap()">RestMap</button>	
 		 	</div>
-		 	
+		 
 		 	<?php
 
 
@@ -366,92 +444,38 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 		 		
 		 	<script type="text/javascript">
 
-			            function showLine(lat1,lng1,lat2,lng2) {
-							var map = new google.maps.Map(document.getElementById('map'), {
-							zoom: 13,
-							center: {lat: lat1, lng:lng1},
-							mapTypeId: 'terrain'
-							});
-							var flightPlanCoordinates = [
-							{lat: lat1, lng: lng1},
-							{lat: lat2, lng: lng2}
-							];
-					        var flightPath = new google.maps.Polyline({
-					          path: flightPlanCoordinates,
-					          geodesic: true,
-					          strokeColor: '#FF0000',
-					          strokeOpacity: 1.0,
-					          strokeWeight: 2
-					        });
-
-					        flightPath.setMap(map);
-					       var StartMarker = {lat: lat1, lng:lng1};
-							var marker = new google.maps.Marker({
-							position: StartMarker,
-							map: map,
-							title: 'START'
-							});
-
-					       var EndMarker = {lat: lat2, lng:lng2};
-							var marker = new google.maps.Marker({
-							position: EndMarker,
-							map: map,
-							title: 'END'
-							});
-						}
 
 
 					var robotData = <?php echo get_robot_data($UserIDSession)?>;
+
 					console.log(robotData);
 					var counter = 0;
 					var CurrentArry = [];
-					var LastDayArry = [];
 
-					for (i = 0; i < robotData.length; i++) {
-						var CurrentLatLng = "" + robotData[i][2] +"," + robotData[i][3];
-						var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + CurrentLatLng + "&sensor=false&key=AIzaSyBJ3sEHb8_vH2YWmYXX28ZL53i8g9zO_bc";
-						var jqxhr = $.getJSON(url, function (data) {
-							var Caddress = data.results[0].formatted_address;
-							var res = Caddress.split("،");
-							var TheAddress = "" + res[1] + "," + res[2];
-							var CurrentAddress = TheAddress.replace(/[0-9]/g, '');
-							console.log(CurrentAddress);
-						    CurrentArry.push(CurrentAddress);     
-						})
-						.done(function() {
-								counter++;
-						})
-						var LastDayLatLng = "" + robotData[i][4] +"," + robotData[i][5];
-						var url1 = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + LastDayLatLng + "&sensor=false&key=AIzaSyBJ3sEHb8_vH2YWmYXX28ZL53i8g9zO_bc";
-						var jqxhr1 = $.getJSON(url1, function (data) {
-							var Laddress = data.results[0].formatted_address;
-							var res = Laddress.split("،");
-							var TheAddress = "" + res[1] + "," + res[2];
-							TheAddress.replace(/[0-9]/g, '');
-							var LastAdderss = TheAddress.replace(/[0-9]/g, '');
-							console.log(LastAdderss);
-							LastDayArry.push(LastAdderss);  
-							
-						})
-						.done(function() {
-							counter++;
-						})
+			 
+					for(var i=0; i<robotData.length; i++){
+						var CurrentLatLng = "" + robotData[i][7] +"," + robotData[i][8];
+						urll = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + CurrentLatLng + "&sensor=false&key=AIzaSyBJ3sEHb8_vH2YWmYXX28ZL53i8g9zO_bc";
+					  $.ajax({	
+						url : urll,
+					    type: 'GET',
+					    dataType: 'json',
+					    async: false,
+					    success: function(data){
+						var Caddress = data.results[0].formatted_address;
+						var res = Caddress.split("،");
+						var TheAddress = "" + res[1] + "," + res[2];
+					    var CurrentAddress = TheAddress.replace(/[0-9]/g, '');
+					    CurrentArry.push(CurrentAddress); 
+					    counter++;
+					    }
+					  });
+
 					}
-
-					console.log("d0   " + counter )
-
-					var myVarToset = setInterval(Counterr, 10);
-					function Counterr() {
-						console.log(counter);
-						if (counter == robotData.length * 2 & UserLat > 0 ) {
-							CalcUserFromRobot();
-							initMap();
-							clearInterval(myVarToset);
-						}
-					}
+					
 
 
-			function distance(lat1, lon1, lat2, lon2, unit) {
+				function distance(lat1, lon1, lat2, lon2, unit) {
 					if ((lat1 == lat2) && (lon1 == lon2)) {
 						return 0;
 					}
@@ -473,47 +497,77 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 					}
 				}
 
-					//Get User Location
-					var UserLat = 0;
-					var UserLng = 0;
-
-					if (navigator.geolocation) { //check if geolocation is available
-		                navigator.geolocation.getCurrentPosition(function(position){
-		                   UserLat = position.coords.latitude;
-		                   UserLng = position.coords.longitude;
-		                }); 
-	            	}
-
-
-	            	function CalcUserFromRobot() {
-	            		distanceUserRoobot = [];
-		 				for (i = 0; i < robotData.length; i++) {
-							var CalcDistanceUser = distance(UserLat,UserLng,robotData[i][2],robotData[i][3],"K");
-							var RoundDistanceUser = Math.round(CalcDistanceUser * 100) / 100;
-							distanceUserRoobot[i] = RoundDistanceUser;
-						}	            		
-	            	}
-
-
-
-            	
-				AllLat = [];
-				AllLng = [];
-				distanceOverDay = [];
-				distanceUserRoobot = [];
-
-				for (i = 0; i < robotData.length; i++) {
-					AllLat.push(robotData[i][2]);
-					AllLat.push(robotData[i][4]);
-					AllLng.push(robotData[i][3]);
-					AllLng.push(robotData[i][5]);
-					var CalcDistanceDay = distance(AllLat[0],AllLng[0],AllLat[1],AllLng[1],"K");
-					var RoundDistanceDay = Math.round(CalcDistanceDay * 100) / 100;
-					distanceOverDay[i] = RoundDistanceDay;
-					AllLat = [];
-					AllLng = [];
+				function getLocation() {
+				  if (navigator.geolocation) {
+				    navigator.geolocation.getCurrentPosition(showPosition);
+				  } else {
+				    console.log( "Geolocation is not supported by this browser.");
+				  }
 				}
-					
+
+
+				distanceUserRoobot = [];
+				function showPosition(position) {
+					console.log("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
+					var UserLat = position.coords.latitude;
+					var UserLng = position.coords.longitude;
+	        		var allSelctedArea = true;
+	        		var allSafeArea = true;
+	 				for (i = 0; i < robotData.length; i++) {
+						var CalcDistanceUser = distance(UserLat,UserLng,robotData[i][7],robotData[i][8],"K");
+						var RoundDistanceUser = Math.round(CalcDistanceUser * 100) / 100;
+						distanceUserRoobot[i] = RoundDistanceUser;
+						if (distanceUserRoobot[i] < robotData[i][5]) {
+							$("#alert").append("<div class='alert alert-danger container'> <i class='fas fa-times'></i> <i class='fas fa-times'></i> <i class='fas fa-times'></i> <b id='RobotDanger'>" +  robotData[i][1]   +"</b> Out OF Selected Arera <i class='fas fa-times'></i> <i class='fas fa-times'></i> <i class='fas fa-times'> </i></div>");
+							allSelctedArea = false;
+							
+						}
+						var DangerPlacee = robotData[i][6];
+						var SerchDangerPlace = DangerPlacee.search("MilitaryCity");
+
+
+						var CurrentAddress = CurrentArry[i];
+						var SerchCurrntAddess = CurrentAddress.search("منطقة العسكرية");
+
+						var DangerPlacee2 = robotData[i][6];
+						var SerchDangerPlace2 = DangerPlacee2.search("Airport");
+
+
+						var CurrentAddress2 = CurrentArry[i];
+						var SerchCurrntAddess2 = CurrentAddress2.search("حي المطار");
+
+
+						console.log("ROBOT DANGER " + SerchDangerPlace2 + " Cur" + SerchCurrntAddess2 );
+
+						if (SerchDangerPlace != -1 &&  SerchCurrntAddess != -1 ) {
+
+							$("#alert").append("<div class='alert alert-danger container'> <i class='fas fa-times'></i> <i class='fas fa-times'></i> <i class='fas fa-times'></i> <b id='RobotDanger'>" +  robotData[i][1]   +"</b> In a Restricted area <i class='fas fa-times'></i> <i class='fas fa-times'></i> <i class='fas fa-times'> </i></div>");
+							allSafeArea = false;
+						}
+
+						if (SerchDangerPlace2 != -1 && SerchCurrntAddess2 != -1) {
+							$("#alert").append("<div class='alert alert-danger container'> <i class='fas fa-times'></i> <i class='fas fa-times'></i> <i class='fas fa-times'></i> <b id='RobotDanger'>" +  robotData[i][1]   +"</b> In a Restricted area <i class='fas fa-times'></i> <i class='fas fa-times'></i> <i class='fas fa-times'> </i></div>");
+							allSafeArea = false;
+						}
+
+					}
+					if (allSelctedArea == true) {
+						$("#alert").append("<div class='alert alert-success container'> <i class='far fa-check-circle'></i> ALL ROBOTs IN Selected AREA</div>");
+					}	
+					if (allSafeArea == true) {
+						$("#alert").append("<div class='alert alert-success container'> <i class='far fa-check-circle'></i> ALL ROBOTs IN Safe Side</div>");
+					}	
+				}
+
+				getLocation();
+
+
+
+
+
+
+
+	    
 
 				function initMap() {
 					var CenterOfTabuk = {lat: 28.392127, lng:36.559459};
@@ -529,7 +583,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 			        var bounds = new google.maps.LatLngBounds();
 
 			        for (i = 0; i < robotData.length; i++) {
-			        	switch(robotData[i][1]) {
+			        	switch(robotData[i][2]) {
 						  case "Consumer":
 						    icon = Consumer_icon;
 						    break;
@@ -545,24 +599,21 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 						  default:
 						  icon = "null";
 						}
-					var myLatLng = new google.maps.LatLng(robotData[i][2], robotData[i][3]);
+					var myLatLng = new google.maps.LatLng(robotData[i][7], robotData[i][8]);
 			            marker = new google.maps.Marker({
-			                position: new google.maps.LatLng(robotData[i][2], robotData[i][3]),
+			                position: new google.maps.LatLng(robotData[i][7], robotData[i][8]),
 			                map: map,
 			                icon :   icon,
 			                html: 	"<div class='MaskPanel'>" +
 			                		 "<div class='panel panel-info'>" +
 			                		 	"<div class='panel-heading'>Robot Informaiton</div>"+
 			                		 	"<div class='panel-body'>"+
-			                		 		"Name: <span class='CusInfo'>[ "  + robotData[i][0] +  "] </span>"+
+			                		 		"Name: <span class='CusInfo'>[ "  + robotData[i][1] +  "] </span>"+
 			                		 		"</br> Now in :  <span class='CusInfo'>[ " +  CurrentArry[i] + "]</span>"+
-			                		 		"</br> Last Day Was in :  <span class='CusInfo'>[ " +  LastDayArry[i] + " ]</span>"+
-			                		 		"</br> Kilometers over the last day :  <span class='CusInfo'>[ " +  distanceOverDay[i] + " Kilometers ]</span>"+
 			                		 		"</br> Away from you :  <span class='CusInfo'>[ " +  distanceUserRoobot[i] + " Kilometers ]</span>"+
 			                		 		"</br>"+
-			                		 			 "<a target='_blank' href='https://www.google.com/maps/search/?api=1&query=" + robotData[i][2] + "," + robotData[i][3] + "'> "+
+			                		 			 "<a target='_blank' href='https://www.google.com/maps/search/?api=1&query=" + robotData[i][7] + "," + robotData[i][8] + "'> "+
 			                		 				"<buttn class='btn btn-primary buttnClass'>GO To Robot !!</buttn></a>"+
-			                		 				"<buttn onclick='showLine("+		 robotData[i][2]		+","+  robotData[i][3]  +","+		 robotData[i][4]		+","+  robotData[i][5]  +")' class='btn btn-primary buttnClass'>Show Last Day Line !!</buttn>"+
 			                		 		"</div>"+
 			                		 	"</div>" +
 			                		 "</div>"

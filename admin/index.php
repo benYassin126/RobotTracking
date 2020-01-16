@@ -26,10 +26,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 
 
 
-
-	$x =  $_POST['username'];
-	$y = $_POST['pass'];
-
 	$username = $_POST['username']; //Get Username From The Below Form
 
 	$pass = sha1($_POST['pass']); //Get password From The Below Form

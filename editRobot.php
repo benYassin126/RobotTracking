@@ -23,12 +23,10 @@ if ($do == 'edit') {
 		$RobotID = $_GET['RobotID'];
 		$UserID = $_SESSION['UserIDSession'];
 
-		$statment = $db->prepare("		
-		SELECT RobotName,RobotType,LastHourLat,LastHourLng,LastDayLat,LastDayLng
+		$statment = $db->prepare("SELECT * 
 		FROM robots
-		INNER JOIN locations ON robots.RobotID = locations.RobotID
-		WHERE robots.RobotID = ? AND locations.RobotID = ? ");
-	 	$statment->execute(array($RobotID , $RobotID)); //execute statment
+		WHERE RobotID = ?");
+	 	$statment->execute(array($RobotID)); //execute statment
 	 	$row = $statment->fetch(); // Get Data In Array
 	 	$count = $statment->rowCount(); // return number of colume that executed
 
@@ -63,12 +61,26 @@ if ($do == 'edit') {
 
 		 			<div class="input-group LogGroup">
 					  <span class="input-group-addon " id="basic-addon1"><i class="fas fa-map-marker"></i> <label> New Lat :  <span class="alstrx">*</span></label></span>
-					  <input type="text" placeholder="Enter latitude Of Robot Here ...." value="<?php if(isset($row['LastHourLat'])) { echo $row['LastHourLat']; } ?>" class="form-control" name="LastHourLat"  autofocus="true"  required="required">
+					  <input type="text" placeholder="Enter latitude Of Robot Here ...." value="<?php if(isset($row['Lat'])) { echo $row['Lat']; } ?>" class="form-control" name="Lat"  autofocus="true"  required="required">
 					 </div>
 
 		 			<div class="input-group LogGroup">
 					  <span class="input-group-addon " id="basic-addon1"><i class="fas fa-map-marker"></i> <label> New Lng :  <span class="alstrx">*</span></label></span>
-					  <input type="text" placeholder="Enter longitude Of Robot Here ...." value="<?php if(isset($row['LastHourLng'])) { echo $row['LastHourLng']; } ?>" class="form-control" name="LastHourLng"  required="required">
+					  <input type="text" placeholder="Enter longitude Of Robot Here ...." value="<?php if(isset($row['Lng'])) { echo $row['Lng']; } ?>" class="form-control" name="Lng"  required="required">
+					 </div>
+
+					<div class="input-group LogGroup">
+					  <span class="input-group-addon " id="basic-addon1"><i class="far fa-bookmark"></i> <label> Safe Area :  <span class="alstrx">*</span></label></span>
+					  <input type="number" placeholder="Enter The distance"  class="form-control" name="SafeArea"  value="<?php if(isset($row['SafeArea'])) { echo $row['SafeArea']; } ?>">
+					
+					 </div>
+
+
+					 <div class="input-group LogGroup">
+					    <span class="input-group-addon " id="basic-addon1"><i class="far fa-bookmark"></i> <label> Safe Area :  <span class="alstrx">*</span></label></span>
+						<input type="checkbox" name="place1" value="MilitaryCity" checked> Military City<br>
+						<input type="checkbox" name="place2" value="Airport" checked>Airport<br>
+					
 					 </div>
 					<div class="input-group btnLogo">
 						<input type="submit" value="Edit Robot"  class="btn btn-success btn-lg ">
@@ -95,8 +107,20 @@ if ($do == 'edit') {
 		$RobotID = $_POST['RobotID'];
 		$RobotName = $_POST['RobotName'];
 		$RobotType = $_POST['RobotType'];
-		$LastHourLat = $_POST['LastHourLat'];
-		$LastHourLng = $_POST['LastHourLng'];
+		$Lat = $_POST['Lat'];
+		$Lng = $_POST['Lng'];
+		$SafeArea = $_POST['SafeArea'];
+		$DangerPlace = array();
+
+
+		if (isset($_POST['place1'])) {
+			$DangerPlace [] = $_POST['place1'];
+		}
+		if (isset($_POST['place2'])) {
+			$DangerPlace [] = $_POST['place2'];
+		}
+
+		$DangerPlaceStr = implode(",", $DangerPlace);
 
 
 		$erorrArray = array();
@@ -117,17 +141,31 @@ if ($do == 'edit') {
 
 			 	$stmt = $db->prepare("
 					UPDATE 
-					robots t1, locations t2 
-					SET t1.RobotName = ? , t1.RobotType = ? , t2.LastHourLat = ? , t2.LastHourLng = ? 
-					WHERE t1.RobotID = ? AND t2.RobotID = ?
+					robots
+					SET RobotName = ? , RobotType = ? ,SafeArea = ?,DangerPlace = ?,Lat = ? , Lng = ?
+					WHERE RobotID = ?
 			 		");
 
 
-			 	$stmt->execute(array($RobotName,$RobotType,$LastHourLat,$LastHourLng,$RobotID,$RobotID)); //execute statment
+			 	$stmt->execute(array($RobotName,$RobotType,$SafeArea,$DangerPlaceStr,$Lat,$Lng,$RobotID)); //execute statment
 		
+			 	
+
+
 			 	$count = $stmt->rowCount(); // return number of colume that executed
 
 
+			 	$stmt1 = $db->prepare("
+			 		INSERT INTO  
+			 		locations
+			 		(DateAndTime ,LocLat,LocLng,RobotID)
+			 		VALUES 
+			 		(CURRENT_TIMESTAMP , ? ,?, ?) 
+			 		");
+
+
+
+			 	$stmt1->execute(array($Lat,$Lng,$RobotID)); //execute statment
 
 			 	echo "<div class='alert alert-success container'>done There is " . $count . " Affected </div>";
 

@@ -39,9 +39,8 @@ function get_robot_data($UserID){
     }
     // update location with location_status if admin location_status.
     $sqldata = mysqli_query($con,"
-		SELECT RobotName,RobotType,LastHourLat,LastHourLng,LastDayLat,LastDayLng
+		SELECT * 
 		FROM robots
-		INNER JOIN locations ON robots.RobotID = locations.RobotID
 		WHERE robots.UserID = $UserID;
   ");
 
@@ -60,6 +59,61 @@ function get_robot_data($UserID){
         return null;
     }
 }
+//Funcuiton to get Robot data From DB
+function get_last_loctaion($RobotID){
+    $con=mysqli_connect ("localhost", 'root', '','robottracking');
+    if (!$con) {
+        die('Not connected : ' . mysqli_connect_error());
+    }
+    // update location with location_status if admin location_status.
+    $sqldata = mysqli_query($con,"SELECT LocLat,LocLng FROM `locations1` WHERE RobotID = $RobotID ORDER BY `DateAndTime` DESC LIMIT 1");
+
+    $rows = array();
+
+    while($r = mysqli_fetch_assoc($sqldata)) {
+        $rows[] = $r;
+
+    }
+
+    $indexed = array_map('array_values', $rows);
+    //  $array = array_filter($indexed);
+
+    echo json_encode($indexed);
+    if (!$rows) {
+        return null;
+    }
+}
+
+//Funcuiton to get Robot locations From DB
+function get_robot_locations($RobotID){
+    $con=mysqli_connect ("localhost", 'root', '','robottracking');
+    if (!$con) {
+        die('Not connected : ' . mysqli_connect_error());
+    }
+    // update location with location_status if admin location_status.
+    $sqldata = mysqli_query($con,"
+		SELECT DateAndTime,LocLat,LocLng,RobotID
+		FROM locations
+		WHERE RobotID = $RobotID
+		ORDER BY DateAndTime DESC
+  ");
+
+    $rows = array();
+
+    while($r = mysqli_fetch_assoc($sqldata)) {
+        $rows[] = $r;
+
+    }
+
+    $indexed = array_map('array_values', $rows);
+    //  $array = array_filter($indexed);
+
+    echo json_encode($indexed);
+    if (!$rows) {
+        return null;
+    }
+}
+
 
 
 //Redairct Function 
